@@ -2,17 +2,17 @@ package actions
 
 import (
 	"github.com/gobuffalo/buffalo"
-	"github.com/gobuffalo/envy"
-	forcessl "github.com/gobuffalo/mw-forcessl"
-	paramlogger "github.com/gobuffalo/mw-paramlogger"
-	"github.com/unrolled/secure"
-
-	"location_service_v1/ls_v2/models"
-
 	"github.com/gobuffalo/buffalo-pop/pop/popmw"
+	"github.com/gobuffalo/envy"
 	csrf "github.com/gobuffalo/mw-csrf"
+	forcessl "github.com/gobuffalo/mw-forcessl"
 	i18n "github.com/gobuffalo/mw-i18n"
+	paramlogger "github.com/gobuffalo/mw-paramlogger"
 	"github.com/gobuffalo/packr/v2"
+	"github.com/unrolled/secure"
+	"location_service_v1/ls_v2/models"
+	"location_service_v1/ls_v2/repository"
+	"location_service_v1/ls_v2/service"
 )
 
 // ENV is used to help switch settings based on where the
@@ -61,6 +61,18 @@ func App() *buffalo.App {
 
 		app.GET("/", HomeHandler)
 
+		pointsRepository := repository.NewPointsRepository()
+		pointsService := service.NewPointsService(pointsRepository)
+		PointsResource := NewPointResource(pointsService)
+		/* для простоты нужно называть контроллер "Название + Resource"
+		* потому что в движке идёт удаление постфикса Resource и оставляется только название контроллера
+		* предоположительно путь надо править как: points_controller при названии PointsController
+		 */
+		app.Resource("/points", PointsResource)
+
+		//app.Resource("/points", Points1Resource{})
+		app.Resource("/companies", CompaniesResource{})
+		app.Resource("/users", UsersResource{})
 		app.ServeFiles("/", assetsBox) // serve files from the public directory
 	}
 
