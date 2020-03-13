@@ -186,3 +186,15 @@ func (v PointsResource) Destroy(c buffalo.Context) error {
 	}).Respond(c)
 
 }
+
+func (v PointsResource) GetPickPointsList(c buffalo.Context) error {
+
+	verrs, err := v.pointsService.PickPointsList(c)
+	if err != nil {
+		return err
+	}
+	if !verrs.HasAny() {
+		return nil
+	}
+	return nil
+}

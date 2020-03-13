@@ -86,3 +86,12 @@ func (s *PointsService) Destroy(c buffalo.Context) (*models.Point, error) {
 	}
 	return point, nil
 }
+
+func (s *PointsService) PickPointsList(c buffalo.Context) (*validate.Errors, error) {
+	create, err := s.pointsRepository.PickPointsList(c)
+	if err != nil {
+		return nil, err
+	}
+	return create, nil
+
+}

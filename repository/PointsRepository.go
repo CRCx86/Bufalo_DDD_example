@@ -1,8 +1,10 @@
 package repository
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/gobuffalo/validate"
+	"io/ioutil"
 	"location_service_v1/ls_v2/models"
 	"net/http"
 
@@ -163,4 +165,37 @@ func (p *PointsRepository) Destroy(c buffalo.Context) (*models.Point, error) {
 	}
 
 	return point, nil
+}
+
+func (p *PointsRepository) PickPointsList(c buffalo.Context) (*validate.Errors, error) {
+
+	resp, err := http.Get("http://e-solution.pickpoint.ru/api/postamatlist")
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	var points []models.Points
+	err = json.Unmarshal(body, &points)
+	if err != nil {
+		return nil, err
+	}
+
+	// Get the DB connection from the context
+	tx, ok := c.Value("tx").(*pop.Connection)
+	if !ok {
+		return nil, fmt.Errorf("no transaction found")
+	}
+
+	created, _ := tx.ValidateAndCreate(points)
+	if created != nil {
+		return nil, err
+	}
+
+	return created, nil
+
 }
