@@ -179,7 +179,7 @@ func (p *PointsRepository) PickPointsList(c buffalo.Context) (*validate.Errors, 
 	if err != nil {
 		return nil, err
 	}
-	var points []models.Points
+	var points models.Points
 	err = json.Unmarshal(body, &points)
 	if err != nil {
 		return nil, err

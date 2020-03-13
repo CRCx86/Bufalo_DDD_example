@@ -65,10 +65,13 @@ func App() *buffalo.App {
 		* потому что в движке идёт удаление постфикса Resource и оставляется только название контроллера
 		* предоположительно путь надо править как: points_controller при названии PointsController
 		 */
+
 		pointsRepository := repository.NewPointsRepository()
 		pointsService := service.NewPointsService(pointsRepository)
 		PointsResource := NewPointResource(pointsService)
 		app.Resource("/points", PointsResource)
+
+		app.GET("/pickpointlist", PointsResource.GetPickPointsList)
 
 		companiesRepository := repository.NewCompaniesRepository()
 		companiesService := service.NewCompaniesService(companiesRepository)

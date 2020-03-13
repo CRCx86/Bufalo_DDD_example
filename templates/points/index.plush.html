@@ -1,6 +1,9 @@
 <div class="py-4 mb-2">
   <h3 class="d-inline-block">Points</h3>
   <div class="float-right">
+    <%= linkTo(pickpointlistPath(), {class: "btn btn-primary"}) { %>
+      Load Postamats
+    <% } %>
     <%= linkTo(newPointsPath(), {class: "btn btn-primary"}) { %>
       Create New Point
     <% } %>
