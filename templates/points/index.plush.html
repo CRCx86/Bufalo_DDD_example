@@ -10,12 +10,22 @@
 <table class="table table-hover table-bordered">
   <thead class="thead-light">
     <th>Name</th>
+    <th>Address</th>
+    <th>CityName</th>
+    <th>OutDescription</th>
+    <th>OwnerId</th>
+    <th>OwnerName</th>
     <th>&nbsp;</th>
   </thead>
   <tbody>
     <%= for (point) in points { %>
       <tr>
         <td class="align-middle"><%= point.Name %></td>
+        <td class="align-middle"><%= point.Address %></td>
+        <td class="align-middle"><%= point.CityName %></td>
+        <td class="align-middle"><%= point.OutDescription %></td>
+        <td class="align-middle"><%= point.OwnerId %></td>
+        <td class="align-middle"><%= point.OwnerName %></td>
         <td>
           <div class="float-right">
             <%= linkTo(pointPath({ point_id: point.ID }), {class: "btn btn-info", body: "View"}) %>
