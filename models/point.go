@@ -13,11 +13,11 @@ import (
 type Point struct {
 	ID             uuid.UUID `json:"id" db:"id"`
 	Name           string    `json:"name" db:"name"`
-	Address        string    `json:"Address" db:"address"`
-	CityName       string    `json:"CitiName" db:"citiname"`
-	OutDescription string    `json:"OutDescription" db:"outdescription"`
-	OwnerId        int       `json:"OwnerId" db:"ownerId"`
-	OwnerName      string    `json:"OwnerName" db:"ownername"`
+	Address        string    `json:"address" db:"address"`
+	CityName       string    `json:"citi_name" db:"citi_name"`
+	OutDescription string    `json:"out_description" db:"out_description"`
+	OwnerId        int       `json:"owner_id" db:"owner_id"`
+	OwnerName      string    `json:"owner_name" db:"owner_name"`
 	CreatedAt      time.Time `json:"created_at" db:"created_at"`
 	UpdatedAt      time.Time `json:"updated_at" db:"updated_at"`
 }

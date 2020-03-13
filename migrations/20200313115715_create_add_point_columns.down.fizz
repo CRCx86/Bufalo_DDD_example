@@ -1,0 +1,5 @@
+drop_column("point", "address")
+drop_column("point", "citiname")
+drop_column("point", "outdescription")
+drop_column("point", "ownerId")
+drop_column("point", "ownername")

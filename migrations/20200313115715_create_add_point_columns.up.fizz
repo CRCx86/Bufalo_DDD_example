@@ -1,0 +1,5 @@
+add_column("point", "address", "string", {"size": 255, "default": ""})
+add_column("point", "citiname", "string", {"size": 255, "default": ""})
+add_column("point", "outdescription", "string", {"size": 255, "default": ""})
+add_column("point", "ownerId", "int")
+add_column("point", "ownername", "string", {"size": 255, "default": ""})
