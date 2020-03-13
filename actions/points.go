@@ -24,9 +24,9 @@ func NewPointResource(service *service.PointsService) *PointsResource {
 
 // List gets all Points. This function is mapped to the path
 // GET /points
-func (ctr PointsResource) List(c buffalo.Context) error {
+func (v PointsResource) List(c buffalo.Context) error {
 
-	points, q, err := ctr.pointsService.List(c)
+	points, q, err := v.pointsService.List(c)
 	if err != nil {
 		return err
 	}
@@ -45,9 +45,9 @@ func (ctr PointsResource) List(c buffalo.Context) error {
 
 // Show gets the data for one Point. This function is mapped to
 // the path GET /points/{point_id}
-func (ctr PointsResource) Show(c buffalo.Context) error {
+func (v PointsResource) Show(c buffalo.Context) error {
 
-	point, err := ctr.pointsService.Show(c)
+	point, err := v.pointsService.Show(c)
 	if err != nil {
 		return err
 	}
@@ -66,8 +66,8 @@ func (ctr PointsResource) Show(c buffalo.Context) error {
 
 // New renders the form for creating a new Point.
 // This function is mapped to the path GET /points/new
-func (ctr PointsResource) New(c buffalo.Context) error {
-	point := ctr.pointsService.New(c)
+func (v PointsResource) New(c buffalo.Context) error {
+	point := v.pointsService.New(c)
 	if point == nil {
 		return fmt.Errorf("somthing goes worng")
 	}
@@ -77,9 +77,9 @@ func (ctr PointsResource) New(c buffalo.Context) error {
 
 // Create adds a Point to the DB. This function is mapped to the
 // path POST /points
-func (ctr PointsResource) Create(c buffalo.Context) error {
+func (v PointsResource) Create(c buffalo.Context) error {
 
-	verrs, point, err := ctr.pointsService.Create(c)
+	verrs, point, err := v.pointsService.Create(c)
 	if err != nil {
 		return err
 	}
@@ -116,8 +116,8 @@ func (ctr PointsResource) Create(c buffalo.Context) error {
 
 // Edit renders a edit form for a Point. This function is
 // mapped to the path GET /points/{point_id}/edit
-func (ctr PointsResource) Edit(c buffalo.Context) error {
-	point, err := ctr.pointsService.Edit(c)
+func (v PointsResource) Edit(c buffalo.Context) error {
+	point, err := v.pointsService.Edit(c)
 	if err != nil {
 		return err
 	}
@@ -127,9 +127,9 @@ func (ctr PointsResource) Edit(c buffalo.Context) error {
 
 // Update changes a Point in the DB. This function is mapped to
 // the path PUT /points/{point_id}
-func (ctr PointsResource) Update(c buffalo.Context) error {
+func (v PointsResource) Update(c buffalo.Context) error {
 
-	verrs, point, err := ctr.pointsService.Update(c)
+	verrs, point, err := v.pointsService.Update(c)
 	if err != nil {
 		return err
 	}
@@ -166,9 +166,9 @@ func (ctr PointsResource) Update(c buffalo.Context) error {
 
 // Destroy deletes a Point from the DB. This function is mapped
 // to the path DELETE /points/{point_id}
-func (ctr PointsResource) Destroy(c buffalo.Context) error {
+func (v PointsResource) Destroy(c buffalo.Context) error {
 
-	point, err := ctr.pointsService.Destroy(c)
+	point, err := v.pointsService.Destroy(c)
 	if err != nil {
 		return err
 	}

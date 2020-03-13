@@ -61,18 +61,25 @@ func App() *buffalo.App {
 
 		app.GET("/", HomeHandler)
 
-		pointsRepository := repository.NewPointsRepository()
-		pointsService := service.NewPointsService(pointsRepository)
-		PointsResource := NewPointResource(pointsService)
 		/* для простоты нужно называть контроллер "Название + Resource"
 		* потому что в движке идёт удаление постфикса Resource и оставляется только название контроллера
 		* предоположительно путь надо править как: points_controller при названии PointsController
 		 */
+		pointsRepository := repository.NewPointsRepository()
+		pointsService := service.NewPointsService(pointsRepository)
+		PointsResource := NewPointResource(pointsService)
 		app.Resource("/points", PointsResource)
 
-		//app.Resource("/points", Points1Resource{})
-		app.Resource("/companies", CompaniesResource{})
-		app.Resource("/users", UsersResource{})
+		companiesRepository := repository.NewCompaniesRepository()
+		companiesService := service.NewCompaniesService(companiesRepository)
+		CompaniesResource := NewCompanyResource(companiesService)
+		app.Resource("/companies", CompaniesResource)
+
+		usersRepository := repository.NewUsersRepository()
+		usersService := service.NewUsersService(usersRepository)
+		UsersResource := NewUserResource(usersService)
+		app.Resource("/users", UsersResource)
+
 		app.ServeFiles("/", assetsBox) // serve files from the public directory
 	}
 
