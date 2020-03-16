@@ -189,12 +189,19 @@ func (v PointsResource) Destroy(c buffalo.Context) error {
 
 func (v PointsResource) GetPickPointsList(c buffalo.Context) error {
 
-	verrs, err := v.pointsService.PickPointsList(c)
+	points, err := v.pointsService.PickPointsList(c)
 	if err != nil {
 		return err
 	}
-	if !verrs.HasAny() {
-		return nil
-	}
-	return nil
+	return responder.Wants("html", func(c buffalo.Context) error {
+		// Add the paginator to the context so it can be used in the template.
+		c.Flash().Add("success", T.Translate(c, "point.created.success"))
+
+		// and redirect to the show page
+		return c.Redirect(http.StatusSeeOther, "/points")
+	}).Wants("json", func(c buffalo.Context) error {
+		return c.Render(200, r.JSON(points))
+	}).Wants("xml", func(c buffalo.Context) error {
+		return c.Render(200, r.XML(points))
+	}).Respond(c)
 }

@@ -13,6 +13,7 @@
 <table class="table table-hover table-bordered">
   <thead class="thead-light">
     <th>Name</th>
+    <th>PointId</th>
     <th>Address</th>
     <th>CityName</th>
     <th>OutDescription</th>
@@ -24,6 +25,7 @@
     <%= for (point) in points { %>
       <tr>
         <td class="align-middle"><%= point.Name %></td>
+        <td class="align-middle"><%= point.PointId %></td>
         <td class="align-middle"><%= point.Address %></td>
         <td class="align-middle"><%= point.CityName %></td>
         <td class="align-middle"><%= point.OutDescription %></td>

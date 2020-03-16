@@ -13,6 +13,7 @@ import (
 type Point struct {
 	ID             uuid.UUID `json:"id" db:"id"`
 	Name           string    `json:"name" db:"name"`
+	PointId        int       `json:"point_id" db:"point_id"`
 	Address        string    `json:"Address" db:"address"`
 	CityName       string    `json:"CitiName" db:"citi_name"`
 	OutDescription string    `json:"OutDescription" db:"out_description"`
@@ -22,14 +23,28 @@ type Point struct {
 	UpdatedAt      time.Time `json:"updated_at" db:"updated_at"`
 }
 
+// PointDTO
+type PointDTO struct {
+	ID             int    `json:"Id"`
+	Name           string `json:"Name"`
+	Address        string `json:"Address"`
+	CityName       string `json:"CitiName"`
+	OutDescription string `json:"OutDescription"`
+	OwnerId        int    `json:"OwnerId"`
+	OwnerName      string `json:"OwnerName"`
+}
+
 // String is not required by pop and may be deleted
 func (p Point) String() string {
 	jp, _ := json.Marshal(p)
 	return string(jp)
 }
 
-// Points is not required by pop and may be deleted
+// Points
 type Points []Point
+
+// Points DTO
+type PointsDTO []PointDTO
 
 // String is not required by pop and may be deleted
 func (p Points) String() string {

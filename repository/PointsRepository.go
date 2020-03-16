@@ -3,13 +3,12 @@ package repository
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/gobuffalo/buffalo"
+	"github.com/gobuffalo/pop"
 	"github.com/gobuffalo/validate"
 	"io/ioutil"
 	"location_service_v1/ls_v2/models"
 	"net/http"
-
-	"github.com/gobuffalo/buffalo"
-	"github.com/gobuffalo/pop"
 )
 
 // PointsRepository is a
@@ -167,7 +166,7 @@ func (p *PointsRepository) Destroy(c buffalo.Context) (*models.Point, error) {
 	return point, nil
 }
 
-func (p *PointsRepository) PickPointsList(c buffalo.Context) (*validate.Errors, error) {
+func (p *PointsRepository) PickPointsList(c buffalo.Context) ([]*models.Point, error) {
 
 	resp, err := http.Get("http://e-solution.pickpoint.ru/api/postamatlist")
 	if err != nil {
@@ -179,10 +178,36 @@ func (p *PointsRepository) PickPointsList(c buffalo.Context) (*validate.Errors, 
 	if err != nil {
 		return nil, err
 	}
-	var points models.Points
+	var points models.PointsDTO
 	err = json.Unmarshal(body, &points)
 	if err != nil {
 		return nil, err
+	}
+
+	//var points models.PointsDTO
+	//dto := models.PointDTO{
+	//	ID:             1,
+	//	Name:           "2",
+	//	Address:        "3",
+	//	CityName:       "4",
+	//	OutDescription: "5",
+	//	OwnerId:        6,
+	//	OwnerName:      "7",
+	//}
+	//points = append(points, dto)
+
+	pointsDB := []*models.Point{}
+	for _, point := range points {
+		p := models.Point{
+			Name:           point.Name,
+			PointId:        point.ID,
+			Address:        point.Address,
+			CityName:       point.CityName,
+			OutDescription: point.OutDescription,
+			OwnerId:        point.OwnerId,
+			OwnerName:      point.OwnerName,
+		}
+		pointsDB = append(pointsDB, &p)
 	}
 
 	// Get the DB connection from the context
@@ -191,11 +216,14 @@ func (p *PointsRepository) PickPointsList(c buffalo.Context) (*validate.Errors, 
 		return nil, fmt.Errorf("no transaction found")
 	}
 
-	created, _ := tx.ValidateAndCreate(points)
-	if created != nil {
-		return nil, err
+	var created *validate.Errors
+	//for _, pointDB := range pointsDB {
+	created, err = tx.ValidateAndCreate(pointsDB[0])
+	if err != nil {
+		fmt.Println(created)
 	}
+	//}
 
-	return created, nil
+	return pointsDB, nil
 
 }
