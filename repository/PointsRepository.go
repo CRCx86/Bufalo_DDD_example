@@ -217,12 +217,12 @@ func (p *PointsRepository) PickPointsList(c buffalo.Context) ([]*models.Point, e
 	}
 
 	var created *validate.Errors
-	//for _, pointDB := range pointsDB {
-	created, err = tx.ValidateAndCreate(pointsDB[0])
-	if err != nil {
-		fmt.Println(created)
+	for _, pointDB := range pointsDB {
+		created, err = tx.ValidateAndCreate(pointDB)
+		if err != nil {
+			c.Logger().Error(created)
+		}
 	}
-	//}
 
 	return pointsDB, nil
 
