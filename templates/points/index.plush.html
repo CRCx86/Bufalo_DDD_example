@@ -19,18 +19,20 @@
     <th>OutDescription</th>
     <th>OwnerId</th>
     <th>OwnerName</th>
+    <th>CompanyID</th>
     <th>&nbsp;</th>
   </thead>
   <tbody>
     <%= for (point) in points { %>
       <tr>
         <td class="align-middle"><%= point.Name %></td>
-        <td class="align-middle"><%= point.PointId %></td>
+        <td class="align-middle"><%= point.PointID %></td>
         <td class="align-middle"><%= point.Address %></td>
         <td class="align-middle"><%= point.CityName %></td>
         <td class="align-middle"><%= point.OutDescription %></td>
-        <td class="align-middle"><%= point.OwnerId %></td>
+        <td class="align-middle"><%= point.OwnerID %></td>
         <td class="align-middle"><%= point.OwnerName %></td>
+        <td class="align-middle"><%= point.CompanyID %></td>
         <td>
           <div class="float-right">
             <%= linkTo(pointPath({ point_id: point.ID }), {class: "btn btn-info", body: "View"}) %>

@@ -1,6 +1,10 @@
 package actions
 
 import (
+	"location_service_v1/ls_v2/models"
+	"location_service_v1/ls_v2/repository"
+	"location_service_v1/ls_v2/service"
+
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/buffalo-pop/pop/popmw"
 	"github.com/gobuffalo/envy"
@@ -10,9 +14,6 @@ import (
 	paramlogger "github.com/gobuffalo/mw-paramlogger"
 	"github.com/gobuffalo/packr/v2"
 	"github.com/unrolled/secure"
-	"location_service_v1/ls_v2/models"
-	"location_service_v1/ls_v2/repository"
-	"location_service_v1/ls_v2/service"
 )
 
 // ENV is used to help switch settings based on where the
@@ -66,17 +67,17 @@ func App() *buffalo.App {
 		* предоположительно путь надо править как: points_controller при названии PointsController
 		 */
 
-		pointsRepository := repository.NewPointsRepository()
-		pointsService := service.NewPointsService(pointsRepository)
-		PointsResource := NewPointResource(pointsService)
-		app.Resource("/points", PointsResource)
-
-		app.GET("/pickpointlist", PointsResource.GetPickPointsList)
-
 		companiesRepository := repository.NewCompaniesRepository()
 		companiesService := service.NewCompaniesService(companiesRepository)
 		CompaniesResource := NewCompanyResource(companiesService)
 		app.Resource("/companies", CompaniesResource)
+
+		pointsRepository := repository.NewPointsRepository()
+		pointsService := service.NewPointsService(pointsRepository)
+		PointsResource := NewPointResource(pointsService, companiesService)
+		app.Resource("/points", PointsResource)
+
+		app.GET("/pickpointlist", PointsResource.GetPickPointsList)
 
 		usersRepository := repository.NewUsersRepository()
 		usersService := service.NewUsersService(usersRepository)

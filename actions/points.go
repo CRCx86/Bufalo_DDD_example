@@ -9,16 +9,18 @@ import (
 	"github.com/gobuffalo/x/responder"
 )
 
-// PointsController is a
+// PointsResource is a
 type PointsResource struct {
 	buffalo.Resource
-	pointsService *service.PointsService
+	pointsService    *service.PointsService
+	companiesService *service.CompaniesService
 }
 
-// NewPointsController is a
-func NewPointResource(service *service.PointsService) *PointsResource {
+// NewPointResource is a
+func NewPointResource(pointsService *service.PointsService, companiesService *service.CompaniesService) *PointsResource {
 	return &PointsResource{
-		pointsService: service,
+		pointsService:    pointsService,
+		companiesService: companiesService,
 	}
 }
 
@@ -68,10 +70,13 @@ func (v PointsResource) Show(c buffalo.Context) error {
 // This function is mapped to the path GET /points/new
 func (v PointsResource) New(c buffalo.Context) error {
 	point := v.pointsService.New(c)
+	companies, _, _ := v.companiesService.List(c)
+	fmt.Println(companies)
 	if point == nil {
 		return fmt.Errorf("somthing goes worng")
 	}
 	c.Set("point", point)
+	c.Set("companies", companies)
 	return c.Render(http.StatusOK, r.HTML("/points/new.plush.html"))
 }
 
@@ -118,10 +123,12 @@ func (v PointsResource) Create(c buffalo.Context) error {
 // mapped to the path GET /points/{point_id}/edit
 func (v PointsResource) Edit(c buffalo.Context) error {
 	point, err := v.pointsService.Edit(c)
+	companies, _, _ := v.companiesService.List(c)
 	if err != nil {
 		return err
 	}
 	c.Set("point", point)
+	c.Set("companies", companies)
 	return c.Render(http.StatusOK, r.HTML("/points/edit.plush.html"))
 }
 
@@ -187,6 +194,7 @@ func (v PointsResource) Destroy(c buffalo.Context) error {
 
 }
 
+// GetPickPointsList is a
 func (v PointsResource) GetPickPointsList(c buffalo.Context) error {
 
 	points, err := v.pointsService.PickPointsList(c)

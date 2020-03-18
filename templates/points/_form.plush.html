@@ -1,8 +1,12 @@
 <%= f.InputTag("Name") %>
-<%= f.InputTag("PointId") %>
+<%= f.InputTag("PointID") %>
 <%= f.InputTag("Address") %>
 <%= f.InputTag("CityName") %>
 <%= f.InputTag("OutDescription") %>
-<%= f.InputTag("OwnerId") %>
+<%= f.InputTag("OwnerID") %>
 <%= f.InputTag("OwnerName") %>
+<!-- <%= f.InputTag("CompanyID") %> -->
+
+<!-- <%= f.SelectedTag("CompanyID", {"label": "CompanyID", options: companies, value: point.CompanyID, "allow_blank": true, "required": nil}) %> -->
+
 <button class="btn btn-success" role="submit">Save</button>

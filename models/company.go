@@ -2,11 +2,12 @@ package models
 
 import (
 	"encoding/json"
+	"time"
+
 	"github.com/gobuffalo/pop"
 	"github.com/gobuffalo/validate"
 	"github.com/gobuffalo/validate/validators"
 	"github.com/gofrs/uuid"
-	"time"
 )
 
 // Company is used by pop to map your .model.Name.Proper.Pluralize.Underscore database table to your go code.
@@ -15,6 +16,7 @@ type Company struct {
 	Name      string    `json:"name" db:"name"`
 	CreatedAt time.Time `json:"created_at" db:"created_at"`
 	UpdatedAt time.Time `json:"updated_at" db:"updated_at"`
+	Points    []Point   `json:"points,omitempty" has_many:"points"`
 }
 
 // String is not required by pop and may be deleted

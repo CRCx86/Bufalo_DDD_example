@@ -2,36 +2,40 @@ package models
 
 import (
 	"encoding/json"
+	"time"
+
 	"github.com/gobuffalo/pop"
 	"github.com/gobuffalo/validate"
 	"github.com/gobuffalo/validate/validators"
 	"github.com/gofrs/uuid"
-	"time"
 )
 
 // Point is used by pop to map your .model.Name.Proper.Pluralize.Underscore database table to your go code.
 type Point struct {
 	ID             uuid.UUID `json:"id" db:"id"`
 	Name           string    `json:"name" db:"name"`
-	PointId        int       `json:"point_id" db:"point_id"`
-	Address        string    `json:"Address" db:"address"`
-	CityName       string    `json:"CitiName" db:"citi_name"`
-	OutDescription string    `json:"OutDescription" db:"out_description"`
-	OwnerId        int       `json:"OwnerId" db:"owner_id"`
-	OwnerName      string    `json:"OwnerName" db:"owner_name"`
+	PointID        int       `json:"point_id" db:"point_id"`
+	Address        string    `json:"address" db:"address"`
+	CityName       string    `json:"citiName" db:"citi_name"`
+	OutDescription string    `json:"outDescription" db:"out_description"`
+	OwnerID        int       `json:"ownerId" db:"owner_id"`
+	OwnerName      string    `json:"ownerName" db:"owner_name"`
 	CreatedAt      time.Time `json:"created_at" db:"created_at"`
 	UpdatedAt      time.Time `json:"updated_at" db:"updated_at"`
+	CompanyID      int       `json:"-" db:"company_id"`
+	Company        *Company  `json:"company,omitempty" belongs_to:"company"`
 }
 
-// PointDTO
+// PointDTO is a
 type PointDTO struct {
 	ID             int    `json:"Id"`
 	Name           string `json:"Name"`
 	Address        string `json:"Address"`
 	CityName       string `json:"CitiName"`
 	OutDescription string `json:"OutDescription"`
-	OwnerId        int    `json:"OwnerId"`
+	OwnerID        int    `json:"OwnerId"`
 	OwnerName      string `json:"OwnerName"`
+	Company        string `json:"Company"`
 }
 
 // String is not required by pop and may be deleted
@@ -40,10 +44,10 @@ func (p Point) String() string {
 	return string(jp)
 }
 
-// Points
+// Points is a
 type Points []Point
 
-// Points DTO
+// PointsDTO DTO is a
 type PointsDTO []PointDTO
 
 // String is not required by pop and may be deleted

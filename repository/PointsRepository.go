@@ -3,12 +3,13 @@ package repository
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/gobuffalo/buffalo"
-	"github.com/gobuffalo/pop"
-	"github.com/gobuffalo/validate"
 	"io/ioutil"
 	"location_service_v1/ls_v2/models"
 	"net/http"
+
+	"github.com/gobuffalo/buffalo"
+	"github.com/gobuffalo/pop"
+	"github.com/gobuffalo/validate"
 )
 
 // PointsRepository is a
@@ -184,27 +185,15 @@ func (p *PointsRepository) PickPointsList(c buffalo.Context) ([]*models.Point, e
 		return nil, err
 	}
 
-	//var points models.PointsDTO
-	//dto := models.PointDTO{
-	//	ID:             1,
-	//	Name:           "2",
-	//	Address:        "3",
-	//	CityName:       "4",
-	//	OutDescription: "5",
-	//	OwnerId:        6,
-	//	OwnerName:      "7",
-	//}
-	//points = append(points, dto)
-
 	pointsDB := []*models.Point{}
 	for _, point := range points {
 		p := models.Point{
 			Name:           point.Name,
-			PointId:        point.ID,
+			PointID:        point.ID,
 			Address:        point.Address,
 			CityName:       point.CityName,
 			OutDescription: point.OutDescription,
-			OwnerId:        point.OwnerId,
+			OwnerID:        point.OwnerID,
 			OwnerName:      point.OwnerName,
 		}
 		pointsDB = append(pointsDB, &p)
