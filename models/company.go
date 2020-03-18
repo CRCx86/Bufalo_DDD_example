@@ -53,3 +53,15 @@ func (c *Company) ValidateCreate(tx *pop.Connection) (*validate.Errors, error) {
 func (c *Company) ValidateUpdate(tx *pop.Connection) (*validate.Errors, error) {
 	return validate.NewErrors(), nil
 }
+
+// implement Selectable
+
+// SelectLabel is a
+func (c Company) SelectLabel() string {
+	return c.Name
+}
+
+// SelectValue is a
+func (c Company) SelectValue() interface{} {
+	return c.ID
+}

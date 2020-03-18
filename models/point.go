@@ -22,7 +22,7 @@ type Point struct {
 	OwnerName      string    `json:"ownerName" db:"owner_name"`
 	CreatedAt      time.Time `json:"created_at" db:"created_at"`
 	UpdatedAt      time.Time `json:"updated_at" db:"updated_at"`
-	CompanyID      int       `json:"-" db:"company_id"`
+	CompanyID      uuid.UUID `json:"company_id" db:"company_id"`
 	Company        *Company  `json:"company,omitempty" belongs_to:"company"`
 }
 

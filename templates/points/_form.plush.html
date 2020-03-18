@@ -5,8 +5,7 @@
 <%= f.InputTag("OutDescription") %>
 <%= f.InputTag("OwnerID") %>
 <%= f.InputTag("OwnerName") %>
-<!-- <%= f.InputTag("CompanyID") %> -->
 
-<!-- <%= f.SelectedTag("CompanyID", {"label": "CompanyID", options: companies, value: point.CompanyID, "allow_blank": true, "required": nil}) %> -->
+<%= f.SelectTag("CompanyID", {"label": "CompanyID", options: companies, value: point.CompanyID, "allow_blank": true, "required": nil}) %>
 
 <button class="btn btn-success" role="submit">Save</button>

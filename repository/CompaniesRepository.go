@@ -2,11 +2,12 @@ package repository
 
 import (
 	"fmt"
+	"location_service_v1/ls_v2/models"
+	"net/http"
+
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/pop"
 	"github.com/gobuffalo/validate"
-	"location_service_v1/ls_v2/models"
-	"net/http"
 )
 
 // CompaniesRepository is a
@@ -34,6 +35,17 @@ func (p *CompaniesRepository) List(c buffalo.Context) (*models.Companies, *pop.Q
 	q := tx.PaginateFromParams(c.Params())
 
 	// Retrieve all Companies from the DB
+
+	//with eager points
+	if err := q.Eager().All(companies); err != nil {
+		return nil, nil, err
+	}
+
+	// // just companies
+	// if err := q.All(companies); err != nil {
+	// 	return nil, nil, err
+	// }
+
 	if err := q.All(companies); err != nil {
 		return nil, nil, err
 	}

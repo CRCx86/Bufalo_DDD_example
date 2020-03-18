@@ -37,9 +37,14 @@ func (p *PointsRepository) List(c buffalo.Context) (*models.Points, *pop.Query, 
 	q := tx.PaginateFromParams(c.Params())
 
 	// Retrieve all Points from the DB
-	if err := q.All(points); err != nil {
+	if err := q.Eager().All(points); err != nil {
 		return nil, nil, err
 	}
+
+	// // Retrieve all Points from the DB
+	// if err := q.All(points); err != nil {
+	// 	return nil, nil, err
+	// }
 
 	return points, q, nil
 }
@@ -167,6 +172,7 @@ func (p *PointsRepository) Destroy(c buffalo.Context) (*models.Point, error) {
 	return point, nil
 }
 
+// PickPointsList is a
 func (p *PointsRepository) PickPointsList(c buffalo.Context) ([]*models.Point, error) {
 
 	resp, err := http.Get("http://e-solution.pickpoint.ru/api/postamatlist")
@@ -185,6 +191,12 @@ func (p *PointsRepository) PickPointsList(c buffalo.Context) ([]*models.Point, e
 		return nil, err
 	}
 
+	pickPoint := models.Company{}
+	err = models.DB.Where("name = ?", "pickpoint").Last(&pickPoint)
+	if err != nil {
+		return nil, err
+	}
+
 	pointsDB := []*models.Point{}
 	for _, point := range points {
 		p := models.Point{
@@ -196,6 +208,7 @@ func (p *PointsRepository) PickPointsList(c buffalo.Context) ([]*models.Point, e
 			OwnerID:        point.OwnerID,
 			OwnerName:      point.OwnerName,
 		}
+		p.CompanyID = pickPoint.ID
 		pointsDB = append(pointsDB, &p)
 	}
 
