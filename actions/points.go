@@ -71,7 +71,6 @@ func (v PointsResource) Show(c buffalo.Context) error {
 func (v PointsResource) New(c buffalo.Context) error {
 	point := v.pointsService.New(c)
 	companies, _, _ := v.companiesService.List(c)
-	fmt.Println(companies)
 	if point == nil {
 		return fmt.Errorf("somthing goes worng")
 	}

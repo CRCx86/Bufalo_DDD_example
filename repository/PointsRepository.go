@@ -36,15 +36,15 @@ func (p *PointsRepository) List(c buffalo.Context) (*models.Points, *pop.Query, 
 	// Default values are "page=1" and "per_page=20".
 	q := tx.PaginateFromParams(c.Params())
 
-	// Retrieve all Points from the DB
-	if err := q.Eager().All(points); err != nil {
-		return nil, nil, err
-	}
-
 	// // Retrieve all Points from the DB
-	// if err := q.All(points); err != nil {
+	// if err := q.Eager().All(points); err != nil {
 	// 	return nil, nil, err
 	// }
+
+	// Retrieve all Points from the DB
+	if err := q.All(points); err != nil {
+		return nil, nil, err
+	}
 
 	return points, q, nil
 }

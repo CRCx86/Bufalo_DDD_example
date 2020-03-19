@@ -36,16 +36,12 @@ func (p *CompaniesRepository) List(c buffalo.Context) (*models.Companies, *pop.Q
 
 	// Retrieve all Companies from the DB
 
-	//with eager points
-	if err := q.Eager().All(companies); err != nil {
-		return nil, nil, err
-	}
-
-	// // just companies
-	// if err := q.All(companies); err != nil {
+	// //with eager points
+	// if err := q.Eager().All(companies); err != nil {
 	// 	return nil, nil, err
 	// }
 
+	// just companies
 	if err := q.All(companies); err != nil {
 		return nil, nil, err
 	}
